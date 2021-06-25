@@ -15,7 +15,12 @@ const isPrime = (num: number): boolean => {
 
 const findPrimeFactors = (num: number): number[] => {
 	//not prime, replace with prime factors
-	let primeFactors: number[] = [1];
+	let primeFactors: number[] = [];
+	if (isPrime(num)) {
+		//include case for prime numbers, number itself is the prime factor
+		primeFactors.push(num);
+		return primeFactors;
+	}
 	let sqrt: number = Math.sqrt(num); //all factors of a number are <= number's square root, this is the upper limit of possible factors
 	for (let j: number = 2; j <= sqrt; j++) {
 		if (num % j === 0) {
@@ -46,5 +51,5 @@ const findPrimeFactors = (num: number): number[] => {
 	return primeFactors;
 };
 
-let test: number[] = findPrimeFactors(200);
+let test: number[] = findPrimeFactors(7);
 console.log(test);
