@@ -16,6 +16,7 @@ const isPrime = (num: number): boolean => {
 const findPrimeFactors = (num: number): number[] => {
 	//not prime, replace with prime factors
 	let primeFactors: number[] = [];
+	//index [factor, number of repeats (power)]
 	if (isPrime(num)) {
 		//include case for prime numbers, number itself is the prime factor
 		primeFactors.push(num);
@@ -48,8 +49,9 @@ const findPrimeFactors = (num: number): number[] => {
 			}
 		}
 	}
+	primeFactors.sort((a, b) => a - b);
 	return primeFactors;
 };
 
-let test: number[] = findPrimeFactors(7);
+let test: number[] = findPrimeFactors(12);
 console.log(test);
