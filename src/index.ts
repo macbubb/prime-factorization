@@ -1,14 +1,15 @@
-document.getElementById("app").innerHTML = `
-
-`;
-
 const isPrime = (num: number): boolean => {
 	let sqrt: number = Math.sqrt(num); //all factors of a number are <= it's square root, so don't need to check divisibility higher
-	if (num === 1) return false;
-	for (let j: number = 2; j <= sqrt; j++) {
-		if (num % j === 0) {
+	if (num <= 3) return num > 1;
+	if (num % 2 === 0 || num % 3 === 0) {
+		return false;
+	}
+	let k: number = 1;
+	while (6 * k - 1 <= sqrt) {
+		if (num % (6 * k + 1) === 0 || num % (6 * k - 1) === 0) {
 			return false;
 		}
+		k++;
 	}
 	return true;
 };
@@ -16,12 +17,6 @@ const isPrime = (num: number): boolean => {
 const findPrimeFactors = (num: number): number[] => {
 	//not prime, replace with prime factors
 	let primeFactors: number[] = [];
-	//index [factor, number of repeats (power)]
-	if (isPrime(num)) {
-		//include case for prime numbers, number itself is the prime factor
-		primeFactors.push(num);
-		return primeFactors;
-	}
 	let sqrt: number = Math.sqrt(num); //all factors of a number are <= number's square root, this is the upper limit of possible factors
 	for (let j: number = 2; j <= sqrt; j++) {
 		if (num % j === 0) {
@@ -53,5 +48,18 @@ const findPrimeFactors = (num: number): number[] => {
 	return primeFactors;
 };
 
-let test: number[] = findPrimeFactors(12);
-console.log(test);
+function handleClick(): void {
+	let num: number = Number(document.getElementById("number").value);
+	let answer: number[] = findPrimeFactors(num);
+	let prettyAnswer: string = "";
+	for (let j = 0; j < answer.length; j++) {
+		prettyAnswer += String(answer[j]);
+		if (j < answer.length - 1) {
+			prettyAnswer += ", ";
+		}
+	}
+	document.getElementById("answer").innerHTML = `<h2>${prettyAnswer}</h2>`;
+}
+
+const submitButton = document.getElementById("button");
+submitButton.addEventListener("click", handleClick, false);
